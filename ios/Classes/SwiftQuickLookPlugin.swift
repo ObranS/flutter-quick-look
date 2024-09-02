@@ -78,6 +78,7 @@ class QuickLookViewController: UIViewController, QLPreviewControllerDataSource, 
         if !shownResource {
             let previewController = QLPreviewController()
             previewController.dataSource = self
+            previewController.delegate = self
             previewController.currentPreviewItemIndex = initialIndex
             present(previewController, animated: true)
             shownResource = true
