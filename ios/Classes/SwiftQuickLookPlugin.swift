@@ -51,7 +51,7 @@ public class SwiftQuickLookPlugin: NSObject, FlutterPlugin, QLQuickLookApi {
     }
 }
 
-class QuickLookViewController: UIViewController, QLPreviewControllerDataSource {
+class QuickLookViewController: UIViewController, QLPreviewControllerDataSource, QLPreviewControllerDelegate {
     var urlsOfResources: [String]
     var shownResource: Bool = false
     var initialIndex: Int
@@ -96,5 +96,11 @@ class QuickLookViewController: UIViewController, QLPreviewControllerDataSource {
     ) -> QLPreviewItem {
         let url = URL(string: urlsOfResources[index])!
         return url as QLPreviewItem
+    }
+    
+    func previewController(
+        _ controller: QLPreviewController,
+        editingModeFor previewItem: QLPreviewItem) -> QLPreviewItemEditingMode {
+            return .updateContents
     }
 }
