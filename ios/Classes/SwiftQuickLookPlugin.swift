@@ -54,6 +54,7 @@ public class SwiftQuickLookPlugin: NSObject, FlutterPlugin, QLQuickLookApi {
 class QuickLookViewController: UIViewController, QLPreviewControllerDataSource, QLPreviewControllerDelegate {
     var urlsOfResources: [String]
     var shownResource: Bool = false
+    var edited: NSNumber = false
     var initialIndex: Int
     var result: (NSNumber?, FlutterError?) -> Void
 
@@ -83,7 +84,7 @@ class QuickLookViewController: UIViewController, QLPreviewControllerDataSource, 
             present(previewController, animated: true)
             shownResource = true
         } else {
-            dismiss(animated: true, completion: { self.result(true, nil) })
+            dismiss(animated: true, completion: { self.result(self.edited, nil) })
         }
     }
 
@@ -104,4 +105,10 @@ class QuickLookViewController: UIViewController, QLPreviewControllerDataSource, 
         editingModeFor previewItem: QLPreviewItem) -> QLPreviewItemEditingMode {
             return .updateContents
     }
+    
+    func previewController(
+        _ controller: QLPreviewController,
+        didUpdateContentsOf previewItem: QLPreviewItem) {
+            edited = true
+        }
 }
